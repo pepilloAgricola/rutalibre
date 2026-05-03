@@ -1,0 +1,6 @@
+﻿User-agent: *
+Allow: /
+Disallow: /Untitled-1.html
+
+Sitemap: https://pepilloagricola.github.io/rutalibre/sitemap.xml
+
