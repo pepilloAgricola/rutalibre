@@ -1,0 +1,554 @@
+/* ═══════════════════════════════════════════════════════════════
+   RutaLibre · mobile.css
+   Mobile-first overrides — carga después de styles.css
+   Breakpoints: 480px (phones) · 768px (tablets) · 900px (desktop)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. HAMBURGER BUTTON ──────────────────────────────────────
+   Siempre existe en el DOM pero solo se ve en móvil            */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: rgba(201,151,58,0.12);
+  border: 1px solid rgba(201,151,58,0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
+}
+/* Estado abierto — X */
+.nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; width: 0; }
+.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ─── 2. MOBILE NAV DRAWER ─────────────────────────────────── */
+.nav-drawer {
+  display: none; /* activado por JS */
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 98;
+  /* Panel lateral */
+}
+.nav-drawer-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10,5,2,0.7);
+  backdrop-filter: blur(4px);
+}
+.nav-drawer-panel {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(320px, 85vw);
+  height: 100%;
+  background: var(--dark);
+  border-left: 1px solid rgba(201,151,58,0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+.nav-drawer.is-open .nav-drawer-panel {
+  transform: translateX(0);
+}
+.nav-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(201,151,58,0.12);
+}
+.nav-drawer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 900;
+  color: var(--gold);
+}
+.nav-drawer-logo span { color: var(--white); }
+.nav-drawer-close {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255,253,247,0.12);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255,253,247,0.6);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+.nav-drawer-close:hover { border-color: var(--gold); color: var(--gold); }
+
+.nav-drawer-links {
+  list-style: none;
+  padding: 16px 0;
+  flex: 1;
+}
+.nav-drawer-links li a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 24px;
+  text-decoration: none;
+  color: rgba(255,253,247,0.75);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255,253,247,0.04);
+  transition: background 0.2s, color 0.2s;
+  min-height: 52px; /* touch target */
+}
+.nav-drawer-links li a:hover,
+.nav-drawer-links li a:active {
+  background: rgba(201,151,58,0.08);
+  color: var(--gold-light);
+}
+.nav-drawer-links li a .drawer-icon {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.nav-drawer-cta {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(201,151,58,0.12);
+}
+.nav-drawer-cta a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--dark) !important;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  min-height: 52px;
+  transition: background 0.2s, transform 0.2s;
+}
+.nav-drawer-cta a:active { transform: scale(0.98); }
+
+@media (max-width: 1180px) {
+  nav ul { display: none !important; }
+  .nav-hamburger { display: flex !important; }
+}
+
+/* ─── 3. ESTILOS MÓVIL GENERALES ──────────────────────────── */
+@media (max-width: 900px) {
+  :root {
+    --anchor-offset: 86px;
+    --anchor-offset-nosotros: 104px;
+    --form-anchor-offset: 94px;
+    --route-anchor-offset: 140px;
+  }
+
+  /* Nav */
+  nav {
+    padding: 14px 20px !important;
+    top: 36px !important;
+  }
+  nav ul { display: none !important; } /* ocultar links del nav desktop */
+  .nav-hamburger { display: flex !important; }
+
+  /* Trust bar */
+  .trust-bar {
+    font-size: 0.7rem;
+    padding: 8px 16px;
+    line-height: 1.4;
+  }
+  .trust-bar .trust-hide { display: none; }
+
+  /* Sections */
+  section { padding: 64px 20px; }
+  .section-header { margin-bottom: 40px; }
+  .section-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+  /* ── HERO ── */
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 0;
+  }
+  .hero-left {
+    padding: 100px 20px 36px;
+    text-align: center;
+    align-items: center;
+  }
+  .hero-badge { font-size: 0.7rem; letter-spacing: 1.5px; }
+  .hero h1 {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+    margin-bottom: 16px;
+  }
+  .hero-desc {
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    max-width: 100%;
+  }
+  .hero-btns {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .btn-primary, .btn-outline {
+    padding: 15px 24px;
+    text-align: center;
+    font-size: 0.95rem;
+    min-height: 52px; /* touch target */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-right {
+    padding: 0 20px 56px;
+  }
+  .hero-car-visual { width: 100%; max-width: 100%; }
+  .car-card { padding: 24px 20px; }
+  .car-emoji { font-size: 4.5rem; margin-bottom: 16px; }
+  .car-card-stats { gap: 10px; }
+  .stat { padding: 12px 8px; }
+  .stat-num { font-size: 1.4rem; }
+  .stat-label { font-size: 0.7rem; }
+
+  /* ── SOCIAL PROOF STRIP ── */
+  .reviews-strip {
+    padding: 28px 20px;
+    gap: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+  }
+  .review-item {
+    padding: 16px 8px;
+    border-right: 1px solid rgba(59,35,20,0.06);
+    border-bottom: 1px solid rgba(59,35,20,0.06);
+  }
+  .review-item:nth-child(2n) { border-right: none; }
+  .review-item:nth-child(3),
+  .review-item:nth-child(4) { border-bottom: none; }
+  .review-num { font-size: 1.8rem; }
+  .review-label { font-size: 0.72rem; }
+
+  /* ── NOSOTROS ── */
+  #nosotros {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-bottom: 72px;
+  }
+  .about-visual { margin-bottom: 48px; }
+  .about-map {
+    padding: 24px 20px;
+    gap: 12px;
+  }
+  .route-item { padding: 14px 10px; }
+  .route-icon { font-size: 1.4rem; }
+  .about-badge-float {
+    /* Evitar que se salga del viewport */
+    position: relative;
+    bottom: auto; right: auto;
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 14px 20px;
+    width: fit-content;
+  }
+  .about-badge-float span { font-size: 1.4rem; display: inline; }
+
+  /* ── SERVICIOS ── */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .service-card {
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .service-card .service-icon {
+    flex-shrink: 0;
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    margin-bottom: 0;
+  }
+  .service-card-text { flex: 1; }
+  .service-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .service-card p  { font-size: 0.85rem; }
+  .service-price   { margin-top: 10px; font-size: 0.82rem; }
+
+  /* ── CÓMO FUNCIONA ── */
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .step-card {
+    min-height: auto;
+    padding: 28px 24px 24px;
+    border-radius: 14px;
+  }
+  .step-number {
+    top: 16px;
+    right: 20px;
+    font-size: 2.8rem;
+  }
+  .step-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 18px;
+    font-size: 1.5rem;
+  }
+  .step-card h3 { font-size: 1.1rem; }
+  .step-card p { font-size: 0.86rem; }
+
+  /* ── EL CARRO ── */
+  .car-showcase {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .car-big-visual { padding: 16px; }
+  .car-big-image  { height: 240px; border-radius: 14px; }
+  .car-plate { font-size: 1.1rem; padding: 6px 18px; letter-spacing: 3px; }
+  .spec-row { padding: 16px 18px; gap: 14px; border-radius: 12px; }
+  .spec-icon { font-size: 1.3rem; width: 36px; }
+  .spec-label { font-size: 0.7rem; }
+  .spec-value { font-size: 0.9rem; }
+  .spec-badge { font-size: 0.68rem; padding: 2px 8px; }
+
+  /* ── CONDUCTORES ── */
+  .drivers-grid { grid-template-columns: 1fr; gap: 20px; }
+  .driver-header { padding: 28px 24px 24px; }
+  .driver-avatar { width: 72px; height: 72px; }
+  .driver-name   { font-size: 1.05rem; }
+  .driver-body   { padding: 22px 24px; }
+  .driver-bio    { font-size: 0.87rem; }
+
+  /* ── RUTAS (preview index) ── */
+  .routes-list { grid-template-columns: 1fr; gap: 14px; }
+  .route-card {
+    padding: 20px;
+    gap: 16px;
+  }
+  .route-card:hover { transform: none; } /* sin hover en touch */
+  .route-dot { width: 44px; height: 44px; font-size: 1.2rem; border-radius: 10px; }
+  .route-info h4 { font-size: 0.95rem; }
+  .route-info p  { font-size: 0.78rem; }
+  .route-price   { font-size: 0.95rem; }
+  .route-time    { font-size: 0.7rem; }
+
+  /* ── FAQ ── */
+  .faq-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .faq-item { border-radius: 12px; }
+  .faq-item summary {
+    min-height: 60px;
+    padding: 17px 18px;
+    font-size: 0.92rem;
+    gap: 12px;
+  }
+  .faq-item p {
+    padding: 0 18px 18px;
+    font-size: 0.86rem;
+  }
+
+  /* ── CONTACTO ── */
+  #contacto {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 56px 20px;
+  }
+  .contact-methods { gap: 12px; }
+  .contact-item {
+    padding: 16px 18px;
+    gap: 16px;
+    border-radius: 12px;
+  }
+  .contact-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+  .contact-label { font-size: 0.68rem; }
+  .contact-value { font-size: 0.92rem; }
+  .contact-assurance {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .assurance-item {
+    min-height: 48px;
+    padding: 11px 14px;
+  }
+  .assurance-item strong { font-size: 0.78rem; }
+
+  /* ── FORMULARIO ── */
+  .contact-form { padding: 28px 20px; border-radius: 16px; }
+  .contact-form h3 { font-size: 1.2rem; margin-bottom: 20px; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { font-size: 0.78rem; margin-bottom: 6px; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 13px 14px;
+    font-size: 1rem; /* evita zoom en iOS */
+    border-radius: 10px;
+    min-height: 48px; /* touch target */
+  }
+  .form-group textarea { height: 80px; }
+  .form-error {
+    font-size: 0.78rem;
+    margin-top: 6px;
+  }
+  .form-trust { padding: 12px 14px; gap: 10px; }
+  .form-trust-icon { font-size: 1.5rem; }
+  .form-trust-text { font-size: 0.78rem; }
+  .btn-submit {
+    padding: 16px;
+    font-size: 1rem;
+    border-radius: 12px;
+    min-height: 56px;
+  }
+  .btn-note { font-size: 0.72rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    padding: 28px 20px;
+  }
+  .footer-text { font-size: 0.75rem; }
+
+  /* ── WHATSAPP FLOTANTE ── */
+  .whatsapp-float {
+    bottom: 16px; right: 16px;
+    width: 56px; height: 56px;
+  }
+  .whatsapp-float img,
+  .whatsapp-float svg { width: 28px; height: 28px; }
+  .whatsapp-float::after { display: none; } /* quitar tooltip en touch */
+}
+
+/* ─── 4. BREAKPOINT PHONES PEQUEÑOS (≤ 480px) ─────────────── */
+@media (max-width: 480px) {
+  .hero h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+  .hero-desc { font-size: 0.9rem; }
+
+  .about-map { grid-template-columns: 1fr 1fr; padding: 18px 14px; gap: 10px; }
+  .route-item { padding: 12px 8px; }
+
+  /* Servicios: volver a columna completa sin row layout */
+  .service-card {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 20px;
+  }
+
+  .contact-form { padding: 24px 16px; }
+  section { padding: 56px 16px; }
+}
+
+/* ─── 5. PÁGINA RUTAS (rutas.html) ─────────────────────────── */
+@media (max-width: 900px) {
+
+  .routes-hero {
+    padding: 120px 20px 60px;
+  }
+  .routes-hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 14px;
+  }
+  .routes-hero p { font-size: 0.92rem; }
+  .routes-hero .btn-primary {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    min-height: 52px;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    padding: 0 0 0 16px;
+    top: 74px; /* trust-bar (36px) + nav (~38px) */
+  }
+  .filter-bar-inner { gap: 0; }
+  .filter-btn {
+    padding: 16px 16px;
+    font-size: 0.78rem;
+    gap: 5px;
+    min-height: 52px;
+  }
+
+  /* Routes grid */
+  .routes-section { padding: 40px 16px 64px; }
+  .routes-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .dest-card.featured {
+    flex-direction: column;
+    grid-column: span 1;
+  }
+  .dest-card.featured .dest-img-wrap {
+    width: 100%;
+    height: 200px;
+  }
+  .dest-card.featured .dest-content { padding: 24px 20px 20px; }
+  .dest-card.featured h2 { font-size: 1.3rem; }
+  .dest-card.featured p  { font-size: 0.87rem; }
+
+  .dest-img-wrap { height: 190px; }
+  .dest-content { padding: 22px 20px 18px; }
+  .dest-content h2 { font-size: 1.15rem; }
+  .dest-content p  { font-size: 0.85rem; margin-bottom: 16px; }
+  .dest-pills { gap: 6px; margin-bottom: 16px; }
+  .dest-pill { font-size: 0.7rem; padding: 3px 10px; }
+  .dest-btn {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    min-height: 52px;
+    border-radius: 12px;
+  }
+
+  /* Contacto en rutas.html — mismo tratamiento que index */
+  #contacto {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 56px 20px;
+  }
+}
+
+/* ─── 6. UTILIDADES TÁCTILES ────────────────────────────────── */
+@media (hover: none) {
+  /* Eliminar efectos hover en dispositivos sin puntero */
+  .service-card:hover { transform: none; box-shadow: none; border-color: rgba(59,35,20,0.08); }
+  .service-card:hover::before { transform: scaleX(0); }
+  .driver-card:hover { transform: none; box-shadow: none; }
+  .dest-card:hover { transform: none; box-shadow: 0 4px 24px rgba(59,35,20,0.07); }
+  .dest-card:hover .dest-img-wrap img { transform: none; }
+  .btn-primary:hover { transform: none; }
+  .dest-btn:hover { transform: none; }
+
+  /* Active states para feedback táctil */
+  .btn-primary:active { transform: scale(0.97); }
+  .dest-btn:active { transform: scale(0.97); }
+  .service-card:active { background: rgba(201,151,58,0.03); }
+  .driver-card:active { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(59,35,20,0.12); }
+}
